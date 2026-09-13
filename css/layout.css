@@ -136,3 +136,22 @@ main {
     justify-content: center;
     box-shadow: var(--sombra-tarjeta);
 }
+
+.nav-sesion .btn-secundario {
+    color: var(--color-superficie);
+    border-color: var(--color-superficie);
+}
+
+.nav-sesion .btn-secundario:hover {
+    background-color: var(--color-superficie);
+    color: var(--color-primario);
+}
+
+.nav-sesion .btn-primario {
+    background-color: var(--color-acento);
+    color: var(--color-primario);
+}
+
+.nav-sesion .btn-primario:hover {
+    background-color: var(--color-acento-claro);
+}
