@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    font-family: var(--fuente-base);
+    font-size: var(--texto-base);
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--fuente-titulos);
+    color: var(--color-primario);
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: var(--texto-xxl);
+}
+
+h2 {
+    font-size: var(--texto-xl);
+}
+
+h3 {
+    font-size: var(--texto-lg);
+}
+
+a {
+    color: var(--color-primario);
+    text-decoration: none;
+    transition: color var(--transicion-rapida);
+}
+
+a:hover {
+    color: var(--color-acento);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+input, textarea, select {
+    font-family: inherit;
+    font-size: var(--texto-base);
+    padding: var(--espacio-sm) var(--espacio-md);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-borde-sm);
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+    width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--color-primario);
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--espacio-lg);
+}
+
+.btn {
+    display: inline-block;
+    padding: var(--espacio-sm) var(--espacio-lg);
+    border-radius: var(--radio-borde);
+    border: none;
+    font-size: var(--texto-base);
+    font-weight: 600;
+    text-align: center;
+    transition: background-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+.btn-primario {
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+}
+
+.btn-primario:hover {
+    background-color: var(--color-primario-oscuro);
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: var(--color-primario);
+    border: 1px solid var(--color-primario);
+}
+
+.btn-secundario:hover {
+    background-color: var(--color-fondo);
+}
+
+.btn-acento {
+    background-color: var(--color-acento);
+    color: var(--color-primario);
+}
+
+.btn-acento:hover {
+    background-color: var(--color-acento-claro);
+}
