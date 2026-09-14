@@ -1,12 +1,58 @@
 .pagina-auth {
+    position: relative;
+    overflow: hidden;
     min-height: calc(100vh - 200px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--espacio-xl) var(--espacio-md);
+    background-color: var(--color-primario);
+    background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 2px, transparent 2px, transparent 14px);
+}
+
+.plato-decorativo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 540px;
+    height: 540px;
+    max-width: 90vw;
+    max-height: 90vw;
+    background-color: var(--color-superficie);
+    border-radius: 50%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 0 0 6px rgba(184, 151, 78, 0.25);
+    z-index: 0;
+}
+
+.cubierto {
+    position: absolute;
+    top: 50%;
+    width: 70px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.cubierto--tenedor {
+    left: calc(50% - 340px);
+    transform: translateY(-50%) rotate(-8deg);
+}
+
+.cubierto--cuchillo {
+    left: calc(50% + 270px);
+    transform: translateY(-50%) rotate(8deg);
+}
+
+@media (max-width: 900px) {
+    .plato-decorativo,
+    .cubierto {
+        display: none;
+    }
 }
 
 .tarjeta-auth {
+    position: relative;
+    z-index: 1;
     background-color: var(--color-superficie);
     border-radius: var(--radio-borde);
     box-shadow: var(--sombra-tarjeta);
