@@ -11,7 +11,9 @@ async function listarRestaurantes(parametros = {}) {
 
 async function obtenerRestaurante(id) {
     try {
-        const respuesta = await fetch(`${API_BASE_URL}/restaurantes/${id}`);
+        const token = localStorage.getItem('token');
+        const cabeceras = token ? { Authorization: `Bearer ${token}` } : {};
+        const respuesta = await fetch(`${API_BASE_URL}/restaurantes/${id}`, { headers: cabeceras });
         const cuerpo = await respuesta.json();
         return { ok: respuesta.ok, cuerpo };
     } catch (error) {
