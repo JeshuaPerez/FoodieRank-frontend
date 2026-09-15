@@ -1,16 +1,17 @@
-function crearTarjetaRestaurante(restaurante, rutaImagenPorDefecto) {
-    const articulo = document.createElement('article');
-    articulo.className = 'tarjeta-restaurante';
+function crearTarjetaRestaurante(restaurante, rutaImagenPorDefecto, rutaDetalle) {
+    const enlace = document.createElement('a');
+    enlace.className = 'tarjeta-restaurante';
+    enlace.href = `${rutaDetalle}?id=${restaurante.id}`;
 
     const insignia = document.createElement('span');
     insignia.className = 'insignia-ranking';
-    insignia.textContent = restaurante.totalResenas > 0 ? restaurante.rankingPonderado.toFixed(1) : 'Nuevo';
-    articulo.appendChild(insignia);
+    insignia.textContent = restaurante.totalResenas > 0 ? `★ ${restaurante.rankingPonderado.toFixed(1)}` : 'Nuevo';
+    enlace.appendChild(insignia);
 
     const imagen = document.createElement('img');
     imagen.src = restaurante.imagen || rutaImagenPorDefecto;
     imagen.alt = restaurante.nombre;
-    articulo.appendChild(imagen);
+    enlace.appendChild(imagen);
 
     const contenido = document.createElement('div');
     contenido.className = 'tarjeta-restaurante__contenido';
@@ -30,6 +31,6 @@ function crearTarjetaRestaurante(restaurante, rutaImagenPorDefecto) {
     ubicacion.textContent = restaurante.ubicacion;
     contenido.appendChild(ubicacion);
 
-    articulo.appendChild(contenido);
-    return articulo;
+    enlace.appendChild(contenido);
+    return enlace;
 }

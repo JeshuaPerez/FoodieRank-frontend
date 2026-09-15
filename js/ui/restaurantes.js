@@ -19,7 +19,7 @@ async function cargarRestaurantesDestacados() {
     }
 
     restaurantes.forEach((restaurante) => {
-        grid.appendChild(crearTarjetaRestaurante(restaurante, 'assets/img/sin-imagen.svg'));
+        grid.appendChild(crearTarjetaRestaurante(restaurante, 'assets/img/sin-imagen.svg', 'pages/detalle.html'));
     });
 }
 
