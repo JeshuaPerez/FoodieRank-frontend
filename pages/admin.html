@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de administración - FoodieRank</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/formularios.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div class="contenedor">
+            <a href="../index.html" class="logo">FoodieRank</a>
+            <nav class="nav-principal">
+                <a href="../index.html">Inicio</a>
+                <a href="busqueda.html">Buscar</a>
+            </nav>
+            <div class="nav-sesion" id="nav-sesion">
+                <a href="login.html" class="btn btn-secundario">Iniciar sesión</a>
+                <a href="registro.html" class="btn btn-primario">Registrarse</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="contenedor">
+            <p id="mensaje-acceso" class="mensaje-estado" hidden></p>
+
+            <div id="panel-admin" hidden>
+                <h1>Panel de administración</h1>
+
+                <section class="seccion-admin">
+                    <div class="seccion-admin__cabecera">
+                        <h2>Categorías</h2>
+                        <button type="button" id="btn-nueva-categoria" class="btn btn-primario">Nueva categoría</button>
+                    </div>
+
+                    <p id="mensaje-categorias" class="mensaje-estado" hidden></p>
+
+                    <table class="tabla-admin" id="tabla-categorias" hidden>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo-categorias"></tbody>
+                    </table>
+
+                    <form id="form-categoria" class="formulario-admin" novalidate hidden>
+                        <h3 id="titulo-form-categoria">Nueva categoría</h3>
+
+                        <div class="campo-formulario">
+                            <label for="nombre-categoria">Nombre</label>
+                            <input type="text" id="nombre-categoria" name="nombre" required>
+                            <span class="mensaje-error-campo" id="error-nombre-categoria" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="descripcion-categoria">Descripción</label>
+                            <textarea id="descripcion-categoria" name="descripcion" rows="3"></textarea>
+                            <span class="mensaje-error-campo" id="error-descripcion-categoria" hidden></span>
+                        </div>
+
+                        <p id="mensaje-general-categoria" hidden></p>
+
+                        <div class="formulario-admin__acciones">
+                            <button type="submit" class="btn btn-primario" id="btn-guardar-categoria">Guardar</button>
+                            <button type="button" class="btn btn-secundario" id="btn-cancelar-categoria">Cancelar</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor">
+            <p>&copy; 2026 FoodieRank. Proyecto académico.</p>
+        </div>
+    </footer>
+
+    <script src="../js/api/config.js" defer></script>
+    <script src="../js/ui/sesion.js" defer></script>
+    <script src="../js/api/categorias.js" defer></script>
+    <script src="../js/ui/admin.js" defer></script>
+</body>
+</html>
