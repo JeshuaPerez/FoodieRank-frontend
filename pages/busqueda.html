@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar restaurantes - FoodieRank</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div class="contenedor">
+            <a href="../index.html" class="logo">FoodieRank</a>
+            <nav class="nav-principal">
+                <a href="../index.html">Inicio</a>
+                <a href="busqueda.html">Buscar</a>
+            </nav>
+            <div class="nav-sesion">
+                <a href="login.html" class="btn btn-secundario">Iniciar sesión</a>
+                <a href="registro.html" class="btn btn-primario">Registrarse</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="contenedor">
+            <h1>Buscar restaurantes</h1>
+            <p>Filtra por nombre, categoría y orden para encontrar lo que buscas.</p>
+
+            <form id="form-filtros" class="barra-filtros" novalidate>
+                <div class="campo-filtro">
+                    <label for="busqueda">Nombre</label>
+                    <input type="search" id="busqueda" name="busqueda" placeholder="Ej: La Parrilla" maxlength="100">
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria" name="categoria">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="orden">Ordenar por</label>
+                    <select id="orden" name="orden">
+                        <option value="ranking">Ranking</option>
+                        <option value="popularidad">Popularidad</option>
+                        <option value="recientes">Más recientes</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primario">Buscar</button>
+            </form>
+
+            <p id="mensaje-restaurantes" class="mensaje-estado" hidden></p>
+            <div class="grid-restaurantes" id="grid-restaurantes"></div>
+
+            <div class="paginacion" id="paginacion" hidden>
+                <button type="button" id="btn-anterior" class="btn btn-secundario">Anterior</button>
+                <span id="texto-pagina"></span>
+                <button type="button" id="btn-siguiente" class="btn btn-secundario">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor">
+            <p>&copy; 2026 FoodieRank. Proyecto académico.</p>
+        </div>
+    </footer>
+
+    <script src="../js/api/config.js" defer></script>
+    <script src="../js/api/restaurantes.js" defer></script>
+    <script src="../js/api/categorias.js" defer></script>
+    <script src="../js/ui/tarjetas.js" defer></script>
+    <script src="../js/ui/busqueda.js" defer></script>
+</body>
+</html>

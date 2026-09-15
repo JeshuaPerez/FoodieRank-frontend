@@ -1,5 +1,3 @@
-const API_BASE_URL = 'http://localhost:3000/api';
-
 async function listarRestaurantes(parametros = {}) {
     try {
         const query = new URLSearchParams(parametros).toString();

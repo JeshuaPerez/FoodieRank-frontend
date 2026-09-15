@@ -162,3 +162,36 @@ main {
     padding: var(--espacio-xl) 0;
     font-size: var(--texto-base);
 }
+
+.barra-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--espacio-md);
+    padding: var(--espacio-lg) 0;
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-xs);
+    flex: 1 1 180px;
+}
+
+.campo-filtro label {
+    font-size: var(--texto-sm);
+    color: var(--color-texto-secundario);
+}
+
+.paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-md);
+    padding: var(--espacio-lg) 0 var(--espacio-xxl);
+}
+
+.paginacion button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
