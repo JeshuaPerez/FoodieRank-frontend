@@ -359,3 +359,62 @@ a.tarjeta-restaurante:hover {
 .formulario-resena textarea {
     width: 100%;
 }
+
+.menu-sesion {
+    position: relative;
+}
+
+.avatar-sesion {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--color-acento);
+    color: var(--color-primario);
+    font-weight: 700;
+    font-size: var(--texto-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-sesion__panel {
+    position: absolute;
+    top: calc(100% + var(--espacio-sm));
+    right: 0;
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+    padding: var(--espacio-md);
+    min-width: 200px;
+    z-index: 200;
+}
+
+.menu-sesion__nombre {
+    font-weight: 700;
+    color: var(--color-texto);
+    margin-bottom: 2px;
+}
+
+.menu-sesion__rol {
+    font-size: var(--texto-xs);
+    color: var(--color-texto-secundario);
+    margin-bottom: var(--espacio-sm);
+}
+
+.menu-sesion__cerrar {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--color-borde);
+    padding: var(--espacio-sm) 0 0;
+    color: var(--color-error);
+    font-size: var(--texto-sm);
+    cursor: pointer;
+}
+
+.menu-sesion__cerrar:hover {
+    color: var(--color-primario);
+}
