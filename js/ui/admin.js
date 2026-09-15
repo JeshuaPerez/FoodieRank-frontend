@@ -177,10 +177,112 @@ async function manejarEliminarCategoria(categoria) {
     mensaje.hidden = false;
 }
 
+let filtroRestaurantesActual = 'pendientes';
+
+function crearFilaRestaurante(restaurante) {
+    const fila = document.createElement('tr');
+
+    const celdaNombre = document.createElement('td');
+    celdaNombre.textContent = restaurante.nombre;
+    fila.appendChild(celdaNombre);
+
+    const celdaCategoria = document.createElement('td');
+    celdaCategoria.textContent = restaurante.categoria || 'Sin categoría';
+    fila.appendChild(celdaCategoria);
+
+    const celdaUbicacion = document.createElement('td');
+    celdaUbicacion.textContent = restaurante.ubicacion;
+    fila.appendChild(celdaUbicacion);
+
+    const celdaEstado = document.createElement('td');
+    const insignia = document.createElement('span');
+    insignia.className = restaurante.aprobado
+        ? 'insignia-estado insignia-estado--aprobado'
+        : 'insignia-estado insignia-estado--pendiente';
+    insignia.textContent = restaurante.aprobado ? 'Aprobado' : 'Pendiente';
+    celdaEstado.appendChild(insignia);
+    fila.appendChild(celdaEstado);
+
+    const celdaAcciones = document.createElement('td');
+    celdaAcciones.className = 'tabla-admin__acciones';
+
+    const botonAccion = document.createElement('button');
+    botonAccion.type = 'button';
+    botonAccion.className = 'btn btn-secundario';
+    botonAccion.textContent = restaurante.aprobado ? 'Rechazar' : 'Aprobar';
+    botonAccion.addEventListener('click', () => manejarAprobarRestaurante(restaurante, !restaurante.aprobado));
+    celdaAcciones.appendChild(botonAccion);
+
+    fila.appendChild(celdaAcciones);
+    return fila;
+}
+
+async function cargarRestaurantes() {
+    const mensaje = document.getElementById('mensaje-restaurantes');
+    const tabla = document.getElementById('tabla-restaurantes');
+    const cuerpo = document.getElementById('cuerpo-restaurantes');
+
+    const aprobado = filtroRestaurantesActual === 'aprobados' ? 'true' : 'false';
+    const resultado = await listarRestaurantes({ aprobado, limite: 50 });
+
+    if (!resultado.ok || !resultado.cuerpo) {
+        mensaje.textContent = 'No se pudieron cargar los restaurantes. Verifica tu conexión con el servidor.';
+        mensaje.hidden = false;
+        tabla.hidden = true;
+        return;
+    }
+
+    const restaurantes = resultado.cuerpo.datos.datos;
+    cuerpo.innerHTML = '';
+
+    if (restaurantes.length === 0) {
+        mensaje.textContent = filtroRestaurantesActual === 'pendientes'
+            ? 'No hay restaurantes pendientes de aprobación.'
+            : 'Todavía no hay restaurantes aprobados.';
+        mensaje.hidden = false;
+        tabla.hidden = true;
+        return;
+    }
+
+    mensaje.hidden = true;
+    tabla.hidden = false;
+    restaurantes.forEach((restaurante) => {
+        cuerpo.appendChild(crearFilaRestaurante(restaurante));
+    });
+}
+
+async function manejarAprobarRestaurante(restaurante, aprobado) {
+    const mensaje = document.getElementById('mensaje-restaurantes');
+    const resultado = await aprobarRestaurante(restaurante.id, aprobado);
+
+    if (resultado.ok) {
+        await cargarRestaurantes();
+        return;
+    }
+
+    mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo actualizar el estado del restaurante.';
+    mensaje.hidden = false;
+}
+
+function configurarFiltroRestaurantes() {
+    const botones = document.querySelectorAll('#filtro-restaurantes .filtro-admin__boton');
+
+    botones.forEach((boton) => {
+        boton.addEventListener('click', () => {
+            filtroRestaurantesActual = boton.dataset.filtro;
+            botones.forEach((b) => b.classList.remove('filtro-admin__boton--activo'));
+            boton.classList.add('filtro-admin__boton--activo');
+            cargarRestaurantes();
+        });
+    });
+}
+
 document.getElementById('btn-nueva-categoria').addEventListener('click', () => abrirFormularioCategoria());
 document.getElementById('btn-cancelar-categoria').addEventListener('click', cerrarFormularioCategoria);
 document.getElementById('form-categoria').addEventListener('submit', manejarEnvioCategoria);
+configurarFiltroRestaurantes();
 
 if (verificarAccesoAdmin()) {
     cargarCategorias();
+    cargarRestaurantes();
 }
