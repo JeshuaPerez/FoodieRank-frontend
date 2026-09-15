@@ -31,35 +31,8 @@
 
             <section>
                 <h2>Restaurantes destacados</h2>
-                <div class="grid-restaurantes">
-                    <article class="tarjeta-restaurante">
-                        <span class="insignia-ranking">4.8</span>
-                        <img src="assets/img/sin-imagen.svg" alt="Restaurante de ejemplo 1">
-                        <div class="tarjeta-restaurante__contenido">
-                            <h3 class="tarjeta-restaurante__nombre">Restaurante de ejemplo 1</h3>
-                            <p class="tarjeta-restaurante__categoria">Categoría de ejemplo</p>
-                            <p class="tarjeta-restaurante__ubicacion">Ubicación de ejemplo</p>
-                        </div>
-                    </article>
-                    <article class="tarjeta-restaurante">
-                        <span class="insignia-ranking">4.5</span>
-                        <img src="assets/img/sin-imagen.svg" alt="Restaurante de ejemplo 2">
-                        <div class="tarjeta-restaurante__contenido">
-                            <h3 class="tarjeta-restaurante__nombre">Restaurante de ejemplo 2</h3>
-                            <p class="tarjeta-restaurante__categoria">Categoría de ejemplo</p>
-                            <p class="tarjeta-restaurante__ubicacion">Ubicación de ejemplo</p>
-                        </div>
-                    </article>
-                    <article class="tarjeta-restaurante">
-                        <span class="insignia-ranking">4.2</span>
-                        <img src="assets/img/sin-imagen.svg" alt="Restaurante de ejemplo 3">
-                        <div class="tarjeta-restaurante__contenido">
-                            <h3 class="tarjeta-restaurante__nombre">Restaurante de ejemplo 3</h3>
-                            <p class="tarjeta-restaurante__categoria">Categoría de ejemplo</p>
-                            <p class="tarjeta-restaurante__ubicacion">Ubicación de ejemplo</p>
-                        </div>
-                    </article>
-                </div>
+                <p id="mensaje-restaurantes" class="mensaje-estado" hidden></p>
+                <div class="grid-restaurantes" id="grid-restaurantes"></div>
             </section>
         </div>
     </main>
@@ -69,5 +42,8 @@
             <p>&copy; 2026 FoodieRank. Proyecto académico.</p>
         </div>
     </footer>
+
+    <script src="js/api/restaurantes.js" defer></script>
+    <script src="js/ui/restaurantes.js" defer></script>
 </body>
 </html>
