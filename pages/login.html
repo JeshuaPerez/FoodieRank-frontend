@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - FoodieRank</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/formularios.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div class="contenedor">
+            <a href="../index.html" class="logo">FoodieRank</a>
+            <nav class="nav-principal">
+                <a href="../index.html">Inicio</a>
+                <a href="busqueda.html">Buscar</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="pagina-auth">
+            <div class="plato-decorativo"></div>
+            <img src="../assets/img/tenedor.svg" alt="" class="cubierto cubierto--tenedor">
+            <img src="../assets/img/cuchillo.svg" alt="" class="cubierto cubierto--cuchillo">
+
+            <div class="tarjeta-auth">
+                <h1>Iniciar sesión</h1>
+                <p class="tarjeta-auth__subtitulo">Ingresa a tu cuenta de FoodieRank</p>
+
+                <div id="mensaje-general" hidden></div>
+
+                <form id="form-login" novalidate>
+                    <div class="campo-formulario">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                        <span class="mensaje-error-campo" id="error-email" hidden></span>
+                    </div>
+
+                    <div class="campo-formulario">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" required>
+                        <span class="mensaje-error-campo" id="error-password" hidden></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primario">Iniciar sesión</button>
+                </form>
+
+                <p class="enlace-alternativo">¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor">
+            <p>&copy; 2026 FoodieRank. Proyecto académico.</p>
+        </div>
+    </footer>
+
+    <script src="../js/api/auth.js" defer></script>
+    <script src="../js/ui/auth.js" defer></script>
+</body>
+</html>
