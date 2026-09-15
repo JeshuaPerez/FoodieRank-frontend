@@ -206,12 +206,26 @@ function crearFilaRestaurante(restaurante) {
     const celdaAcciones = document.createElement('td');
     celdaAcciones.className = 'tabla-admin__acciones';
 
-    const botonAccion = document.createElement('button');
-    botonAccion.type = 'button';
-    botonAccion.className = 'btn btn-secundario';
-    botonAccion.textContent = restaurante.aprobado ? 'Rechazar' : 'Aprobar';
-    botonAccion.addEventListener('click', () => manejarAprobarRestaurante(restaurante, !restaurante.aprobado));
-    celdaAcciones.appendChild(botonAccion);
+    const botonAprobar = document.createElement('button');
+    botonAprobar.type = 'button';
+    botonAprobar.className = 'btn btn-secundario';
+    botonAprobar.textContent = restaurante.aprobado ? 'Rechazar' : 'Aprobar';
+    botonAprobar.addEventListener('click', () => manejarAprobarRestaurante(restaurante, !restaurante.aprobado));
+    celdaAcciones.appendChild(botonAprobar);
+
+    const botonEditar = document.createElement('button');
+    botonEditar.type = 'button';
+    botonEditar.className = 'btn btn-secundario';
+    botonEditar.textContent = 'Editar';
+    botonEditar.addEventListener('click', () => abrirFormularioRestaurante(restaurante));
+    celdaAcciones.appendChild(botonEditar);
+
+    const botonEliminar = document.createElement('button');
+    botonEliminar.type = 'button';
+    botonEliminar.className = 'btn btn-secundario';
+    botonEliminar.textContent = 'Eliminar';
+    botonEliminar.addEventListener('click', () => manejarEliminarRestaurante(restaurante));
+    celdaAcciones.appendChild(botonEliminar);
 
     fila.appendChild(celdaAcciones);
     return fila;
@@ -277,10 +291,134 @@ function configurarFiltroRestaurantes() {
     });
 }
 
+async function poblarSelectCategorias(nombreSeleccionado = '') {
+    const select = document.getElementById('categoria-restaurante-form');
+    select.innerHTML = '';
+
+    const resultado = await listarCategorias();
+    const categorias = resultado.ok && resultado.cuerpo ? resultado.cuerpo.datos : [];
+
+    categorias.forEach((categoria) => {
+        const opcion = document.createElement('option');
+        opcion.value = categoria.id;
+        opcion.textContent = categoria.nombre;
+        if (categoria.nombre === nombreSeleccionado) opcion.selected = true;
+        select.appendChild(opcion);
+    });
+}
+
+function limpiarErroresRestaurante() {
+    ['nombre', 'descripcion', 'categoriaId', 'ubicacion', 'imagen'].forEach((campo) => {
+        const elemento = document.getElementById(`error-${campo}-restaurante`);
+        elemento.hidden = true;
+        elemento.textContent = '';
+    });
+
+    const mensajeGeneral = document.getElementById('mensaje-general-restaurante');
+    mensajeGeneral.hidden = true;
+    mensajeGeneral.textContent = '';
+    mensajeGeneral.className = '';
+}
+
+function mostrarErroresRestaurante(cuerpo) {
+    if (cuerpo && Array.isArray(cuerpo.datos)) {
+        cuerpo.datos.forEach((error) => {
+            const campo = document.getElementById(`error-${error.campo}-restaurante`);
+            if (campo) {
+                campo.textContent = error.mensaje;
+                campo.hidden = false;
+            }
+        });
+        return;
+    }
+
+    const mensajeGeneral = document.getElementById('mensaje-general-restaurante');
+    mensajeGeneral.textContent = cuerpo?.mensaje || 'No se pudo guardar el restaurante. Intenta de nuevo.';
+    mensajeGeneral.className = 'mensaje-error-general';
+    mensajeGeneral.hidden = false;
+}
+
+async function abrirFormularioRestaurante(restaurante = null) {
+    const formulario = document.getElementById('form-restaurante');
+    const titulo = document.getElementById('titulo-form-restaurante');
+
+    limpiarErroresRestaurante();
+    formulario.reset();
+    await poblarSelectCategorias(restaurante?.categoria ?? '');
+
+    if (restaurante) {
+        formulario.dataset.editId = restaurante.id;
+        titulo.textContent = 'Editar restaurante';
+        document.getElementById('nombre-restaurante-form').value = restaurante.nombre;
+        document.getElementById('descripcion-restaurante-form').value = restaurante.descripcion;
+        document.getElementById('ubicacion-restaurante-form').value = restaurante.ubicacion;
+        document.getElementById('imagen-restaurante-form').value = restaurante.imagen || '';
+    } else {
+        delete formulario.dataset.editId;
+        titulo.textContent = 'Nuevo restaurante';
+    }
+
+    formulario.hidden = false;
+}
+
+function cerrarFormularioRestaurante() {
+    const formulario = document.getElementById('form-restaurante');
+    formulario.hidden = true;
+    formulario.reset();
+    limpiarErroresRestaurante();
+    delete formulario.dataset.editId;
+}
+
+async function manejarEnvioRestaurante(evento) {
+    evento.preventDefault();
+    limpiarErroresRestaurante();
+
+    const formulario = evento.target;
+    const nombre = document.getElementById('nombre-restaurante-form').value.trim();
+    const descripcion = document.getElementById('descripcion-restaurante-form').value.trim();
+    const categoriaId = document.getElementById('categoria-restaurante-form').value;
+    const ubicacion = document.getElementById('ubicacion-restaurante-form').value.trim();
+    const imagen = document.getElementById('imagen-restaurante-form').value.trim();
+    const idEdicion = formulario.dataset.editId;
+
+    const datos = { nombre, descripcion, categoriaId, ubicacion, imagen };
+
+    const resultado = idEdicion
+        ? await actualizarRestaurante(idEdicion, datos)
+        : await crearRestaurante(datos);
+
+    if (resultado.ok) {
+        cerrarFormularioRestaurante();
+        await cargarRestaurantes();
+        return;
+    }
+
+    mostrarErroresRestaurante(resultado.cuerpo);
+}
+
+async function manejarEliminarRestaurante(restaurante) {
+    const confirmado = confirm(`¿Eliminar el restaurante "${restaurante.nombre}"? Esta acción también elimina sus platos y reseñas, y no se puede deshacer.`);
+    if (!confirmado) return;
+
+    const mensaje = document.getElementById('mensaje-restaurantes');
+    const resultado = await eliminarRestaurante(restaurante.id);
+
+    if (resultado.ok) {
+        await cargarRestaurantes();
+        return;
+    }
+
+    mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo eliminar el restaurante.';
+    mensaje.hidden = false;
+}
+
 document.getElementById('btn-nueva-categoria').addEventListener('click', () => abrirFormularioCategoria());
 document.getElementById('btn-cancelar-categoria').addEventListener('click', cerrarFormularioCategoria);
 document.getElementById('form-categoria').addEventListener('submit', manejarEnvioCategoria);
 configurarFiltroRestaurantes();
+document.getElementById('btn-nuevo-restaurante').addEventListener('click', () => abrirFormularioRestaurante());
+document.getElementById('btn-cancelar-restaurante').addEventListener('click', cerrarFormularioRestaurante);
+document.getElementById('form-restaurante').addEventListener('submit', manejarEnvioRestaurante);
 
 if (verificarAccesoAdmin()) {
     cargarCategorias();

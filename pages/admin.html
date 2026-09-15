@@ -79,9 +79,12 @@
                 <section class="seccion-admin">
                     <div class="seccion-admin__cabecera">
                         <h2>Restaurantes</h2>
-                        <div class="filtro-admin" id="filtro-restaurantes">
-                            <button type="button" class="btn btn-secundario filtro-admin__boton filtro-admin__boton--activo" data-filtro="pendientes">Pendientes</button>
-                            <button type="button" class="btn btn-secundario filtro-admin__boton" data-filtro="aprobados">Aprobados</button>
+                        <div class="seccion-admin__controles">
+                            <div class="filtro-admin" id="filtro-restaurantes">
+                                <button type="button" class="btn btn-secundario filtro-admin__boton filtro-admin__boton--activo" data-filtro="pendientes">Pendientes</button>
+                                <button type="button" class="btn btn-secundario filtro-admin__boton" data-filtro="aprobados">Aprobados</button>
+                            </div>
+                            <button type="button" id="btn-nuevo-restaurante" class="btn btn-primario">Nuevo restaurante</button>
                         </div>
                     </div>
 
@@ -99,6 +102,47 @@
                         </thead>
                         <tbody id="cuerpo-restaurantes"></tbody>
                     </table>
+
+                    <form id="form-restaurante" class="formulario-admin" novalidate hidden>
+                        <h3 id="titulo-form-restaurante">Nuevo restaurante</h3>
+
+                        <div class="campo-formulario">
+                            <label for="nombre-restaurante-form">Nombre</label>
+                            <input type="text" id="nombre-restaurante-form" name="nombre" required>
+                            <span class="mensaje-error-campo" id="error-nombre-restaurante" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="descripcion-restaurante-form">Descripción</label>
+                            <textarea id="descripcion-restaurante-form" name="descripcion" rows="3" required></textarea>
+                            <span class="mensaje-error-campo" id="error-descripcion-restaurante" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="categoria-restaurante-form">Categoría</label>
+                            <select id="categoria-restaurante-form" name="categoriaId" required></select>
+                            <span class="mensaje-error-campo" id="error-categoriaId-restaurante" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="ubicacion-restaurante-form">Ubicación</label>
+                            <input type="text" id="ubicacion-restaurante-form" name="ubicacion" required>
+                            <span class="mensaje-error-campo" id="error-ubicacion-restaurante" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="imagen-restaurante-form">Imagen (URL, opcional)</label>
+                            <input type="url" id="imagen-restaurante-form" name="imagen">
+                            <span class="mensaje-error-campo" id="error-imagen-restaurante" hidden></span>
+                        </div>
+
+                        <p id="mensaje-general-restaurante" hidden></p>
+
+                        <div class="formulario-admin__acciones">
+                            <button type="submit" class="btn btn-primario" id="btn-guardar-restaurante">Guardar</button>
+                            <button type="button" class="btn btn-secundario" id="btn-cancelar-restaurante">Cancelar</button>
+                        </div>
+                    </form>
                 </section>
             </div>
         </div>

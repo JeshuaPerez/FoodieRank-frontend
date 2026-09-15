@@ -12,6 +12,14 @@
     justify-content: space-between;
     margin-bottom: var(--espacio-md);
     gap: var(--espacio-md);
+    flex-wrap: wrap;
+}
+
+.seccion-admin__controles {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-md);
+    flex-wrap: wrap;
 }
 
 .tabla-admin {
@@ -36,6 +44,7 @@
 .tabla-admin__acciones {
     display: flex;
     gap: var(--espacio-sm);
+    flex-wrap: wrap;
 }
 
 .formulario-admin {
