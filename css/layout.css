@@ -418,3 +418,34 @@ a.tarjeta-restaurante:hover {
 .menu-sesion__cerrar:hover {
     color: var(--color-primario);
 }
+
+.tarjeta-resena__reacciones {
+    display: flex;
+    gap: var(--espacio-sm);
+    margin-top: var(--espacio-sm);
+}
+
+.boton-reaccion {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: transparent;
+    border: 1px solid var(--color-texto-secundario);
+    border-radius: 999px;
+    padding: 2px var(--espacio-sm);
+    font-size: var(--texto-xs);
+    color: var(--color-texto-secundario);
+    cursor: pointer;
+}
+
+.boton-reaccion--activo {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: var(--color-primario);
+    font-weight: 700;
+}
+
+.boton-reaccion:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
