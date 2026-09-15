@@ -51,6 +51,34 @@
     margin-top: var(--espacio-sm);
 }
 
+.filtro-admin {
+    display: flex;
+    gap: var(--espacio-sm);
+}
+
+.filtro-admin__boton--activo {
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+}
+
+.insignia-estado {
+    display: inline-block;
+    padding: 2px var(--espacio-sm);
+    border-radius: 999px;
+    font-size: var(--texto-xs);
+    font-weight: 700;
+}
+
+.insignia-estado--aprobado {
+    background-color: #DFF5E1;
+    color: #1E7A34;
+}
+
+.insignia-estado--pendiente {
+    background-color: #FFF3D6;
+    color: #9A6B00;
+}
+
 @media (max-width: 700px) {
     .seccion-admin__cabecera {
         flex-direction: column;

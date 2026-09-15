@@ -75,6 +75,31 @@
                         </div>
                     </form>
                 </section>
+
+                <section class="seccion-admin">
+                    <div class="seccion-admin__cabecera">
+                        <h2>Restaurantes</h2>
+                        <div class="filtro-admin" id="filtro-restaurantes">
+                            <button type="button" class="btn btn-secundario filtro-admin__boton filtro-admin__boton--activo" data-filtro="pendientes">Pendientes</button>
+                            <button type="button" class="btn btn-secundario filtro-admin__boton" data-filtro="aprobados">Aprobados</button>
+                        </div>
+                    </div>
+
+                    <p id="mensaje-restaurantes" class="mensaje-estado" hidden></p>
+
+                    <table class="tabla-admin" id="tabla-restaurantes" hidden>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Ubicación</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo-restaurantes"></tbody>
+                    </table>
+                </section>
             </div>
         </div>
     </main>
@@ -88,6 +113,7 @@
     <script src="../js/api/config.js" defer></script>
     <script src="../js/ui/sesion.js" defer></script>
     <script src="../js/api/categorias.js" defer></script>
+    <script src="../js/api/restaurantes.js" defer></script>
     <script src="../js/ui/admin.js" defer></script>
 </body>
 </html>
