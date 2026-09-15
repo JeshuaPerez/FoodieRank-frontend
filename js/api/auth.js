@@ -1,5 +1,3 @@
-const API_BASE_URL = 'http://localhost:3000/api';
-
 async function registrarUsuario(datos) {
     try {
         const respuesta = await fetch(`${API_BASE_URL}/auth/registro`, {
