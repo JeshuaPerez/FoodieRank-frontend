@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/formularios.css">
 </head>
 <body>
     <header class="encabezado">
@@ -45,6 +46,39 @@
                 <h2>Platos</h2>
                 <p id="mensaje-platos" class="mensaje-estado" hidden></p>
                 <div class="grid-platos" id="grid-platos"></div>
+
+                <h2>Reseñas</h2>
+                <p id="mensaje-resenas" class="mensaje-estado" hidden></p>
+                <div class="lista-resenas" id="lista-resenas"></div>
+
+                <p id="aviso-resena" class="mensaje-estado" hidden></p>
+
+                <form id="form-resena" class="formulario-resena" novalidate hidden>
+                    <h3>Deja tu reseña</h3>
+
+                    <div class="campo-formulario">
+                        <label for="calificacion">Calificación</label>
+                        <select id="calificacion" name="calificacion" required>
+                            <option value="">Selecciona una calificación</option>
+                            <option value="5">5 - Excelente</option>
+                            <option value="4">4 - Muy bueno</option>
+                            <option value="3">3 - Bueno</option>
+                            <option value="2">2 - Regular</option>
+                            <option value="1">1 - Malo</option>
+                        </select>
+                        <span class="mensaje-error-campo" id="error-calificacion" hidden></span>
+                    </div>
+
+                    <div class="campo-formulario">
+                        <label for="comentario">Comentario</label>
+                        <textarea id="comentario" name="comentario" rows="4" required></textarea>
+                        <span class="mensaje-error-campo" id="error-comentario" hidden></span>
+                    </div>
+
+                    <p id="mensaje-general-resena" hidden></p>
+
+                    <button type="submit" class="btn btn-primario">Publicar reseña</button>
+                </form>
             </div>
         </div>
     </main>
@@ -57,6 +91,7 @@
 
     <script src="../js/api/config.js" defer></script>
     <script src="../js/api/restaurantes.js" defer></script>
+    <script src="../js/api/resenas.js" defer></script>
     <script src="../js/ui/detalle.js" defer></script>
 </body>
 </html>

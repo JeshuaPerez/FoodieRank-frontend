@@ -31,6 +31,160 @@ function crearTarjetaPlato(plato) {
     return articulo;
 }
 
+function crearTarjetaResena(resena) {
+    const articulo = document.createElement('article');
+    articulo.className = 'tarjeta-resena';
+
+    const cabecera = document.createElement('div');
+    cabecera.className = 'tarjeta-resena__cabecera';
+
+    const autor = document.createElement('span');
+    autor.className = 'tarjeta-resena__autor';
+    autor.textContent = resena.autor || 'Usuario eliminado';
+    cabecera.appendChild(autor);
+
+    const calificacion = document.createElement('span');
+    calificacion.className = 'tarjeta-resena__calificacion';
+    calificacion.textContent = `★ ${resena.calificacion}`;
+    cabecera.appendChild(calificacion);
+
+    articulo.appendChild(cabecera);
+
+    const comentario = document.createElement('p');
+    comentario.className = 'tarjeta-resena__comentario';
+    comentario.textContent = resena.comentario;
+    articulo.appendChild(comentario);
+
+    const fecha = document.createElement('span');
+    fecha.className = 'tarjeta-resena__fecha';
+    fecha.textContent = new Date(resena.creadoEn).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    articulo.appendChild(fecha);
+
+    return articulo;
+}
+
+function obtenerUsuarioActual() {
+    const datos = localStorage.getItem('usuario');
+    if (!datos) return null;
+
+    try {
+        return JSON.parse(datos);
+    } catch (error) {
+        return null;
+    }
+}
+
+function renderizarResenas(resenas) {
+    const lista = document.getElementById('lista-resenas');
+    const mensaje = document.getElementById('mensaje-resenas');
+    lista.innerHTML = '';
+
+    if (resenas.length === 0) {
+        mensaje.textContent = 'Este restaurante todavía no tiene reseñas.';
+        mensaje.hidden = false;
+        return;
+    }
+
+    mensaje.hidden = true;
+    resenas.forEach((resena) => {
+        lista.appendChild(crearTarjetaResena(resena));
+    });
+}
+
+function configurarFormularioResena(restaurante) {
+    const usuario = obtenerUsuarioActual();
+    const aviso = document.getElementById('aviso-resena');
+    const formulario = document.getElementById('form-resena');
+
+    aviso.hidden = true;
+    formulario.hidden = true;
+
+    if (!usuario) {
+        aviso.textContent = 'Inicia sesión para dejar una reseña.';
+        aviso.hidden = false;
+        return;
+    }
+
+    const yaReseno = restaurante.resenas.some((resena) => resena.usuarioId === usuario.id);
+
+    if (yaReseno) {
+        aviso.textContent = 'Ya has dejado una reseña para este restaurante.';
+        aviso.hidden = false;
+        return;
+    }
+
+    formulario.dataset.restauranteId = restaurante.id;
+    formulario.hidden = false;
+}
+
+function limpiarErroresResena() {
+    const errorCalificacion = document.getElementById('error-calificacion');
+    errorCalificacion.textContent = '';
+    errorCalificacion.hidden = true;
+
+    const errorComentario = document.getElementById('error-comentario');
+    errorComentario.textContent = '';
+    errorComentario.hidden = true;
+
+    const mensajeGeneral = document.getElementById('mensaje-general-resena');
+    mensajeGeneral.textContent = '';
+    mensajeGeneral.className = '';
+    mensajeGeneral.hidden = true;
+}
+
+function mostrarErroresResena(errores) {
+    errores.forEach((error) => {
+        const campo = document.getElementById(`error-${error.campo}`);
+        if (campo) {
+            campo.textContent = error.mensaje;
+            campo.hidden = false;
+        }
+    });
+}
+
+function mostrarMensajeGeneralResena(texto, tipo) {
+    const mensajeGeneral = document.getElementById('mensaje-general-resena');
+    mensajeGeneral.textContent = texto;
+    mensajeGeneral.className = tipo === 'exito' ? 'mensaje-exito-general' : 'mensaje-error-general';
+    mensajeGeneral.hidden = false;
+}
+
+async function manejarEnvioResena(evento) {
+    evento.preventDefault();
+    limpiarErroresResena();
+
+    const formulario = evento.target;
+    const restauranteId = formulario.dataset.restauranteId;
+    const calificacion = document.getElementById('calificacion').value;
+    const comentario = document.getElementById('comentario').value.trim();
+
+    const resultado = await crearResena({
+        restauranteId,
+        comentario,
+        calificacion: Number(calificacion)
+    });
+
+    if (resultado.ok) {
+        formulario.reset();
+        await cargarDetalleRestaurante();
+        return;
+    }
+
+    if (Array.isArray(resultado.cuerpo?.datos)) {
+        mostrarErroresResena(resultado.cuerpo.datos);
+        return;
+    }
+
+    mostrarMensajeGeneralResena(
+        resultado.cuerpo?.mensaje || 'No se pudo publicar la reseña. Verifica tu conexión con el servidor.',
+        'error'
+    );
+}
+
 async function cargarDetalleRestaurante() {
     const mensaje = document.getElementById('mensaje-detalle');
     const contenedor = document.getElementById('info-restaurante');
@@ -69,17 +223,23 @@ async function cargarDetalleRestaurante() {
 
     const gridPlatos = document.getElementById('grid-platos');
     const mensajePlatos = document.getElementById('mensaje-platos');
+    gridPlatos.innerHTML = '';
 
     if (restaurante.platos.length === 0) {
         mensajePlatos.textContent = 'Este restaurante todavía no tiene platos registrados.';
         mensajePlatos.hidden = false;
     } else {
+        mensajePlatos.hidden = true;
         restaurante.platos.forEach((plato) => {
             gridPlatos.appendChild(crearTarjetaPlato(plato));
         });
     }
 
+    renderizarResenas(restaurante.resenas);
+    configurarFormularioResena(restaurante);
+
     contenedor.hidden = false;
 }
 
+document.getElementById('form-resena').addEventListener('submit', manejarEnvioResena);
 cargarDetalleRestaurante();

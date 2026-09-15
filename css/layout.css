@@ -300,3 +300,62 @@ a.tarjeta-restaurante:hover {
     font-weight: 700;
     color: var(--color-primario);
 }
+
+.lista-resenas {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-md);
+    padding: var(--espacio-md) 0 var(--espacio-xl);
+}
+
+.tarjeta-resena {
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+    padding: var(--espacio-md);
+}
+
+.tarjeta-resena__cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--espacio-xs);
+}
+
+.tarjeta-resena__autor {
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+.tarjeta-resena__calificacion {
+    color: var(--color-primario);
+    font-weight: 700;
+}
+
+.tarjeta-resena__comentario {
+    color: var(--color-texto);
+    margin-bottom: var(--espacio-xs);
+}
+
+.tarjeta-resena__fecha {
+    font-size: var(--texto-xs);
+    color: var(--color-texto-secundario);
+}
+
+.formulario-resena {
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+    padding: var(--espacio-lg);
+    max-width: 480px;
+    margin-bottom: var(--espacio-xxl);
+}
+
+.formulario-resena h3 {
+    margin-bottom: var(--espacio-md);
+}
+
+.formulario-resena select,
+.formulario-resena textarea {
+    width: 100%;
+}
