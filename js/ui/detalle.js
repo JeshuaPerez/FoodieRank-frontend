@@ -31,7 +31,35 @@ function crearTarjetaPlato(plato) {
     return articulo;
 }
 
-function crearTarjetaResena(resena) {
+function crearReacciones(resena, usuarioActual) {
+    const contenedor = document.createElement('div');
+    contenedor.className = 'tarjeta-resena__reacciones';
+
+    const esPropia = Boolean(usuarioActual) && resena.usuarioId === usuarioActual.id;
+    const deshabilitado = !usuarioActual || esPropia;
+
+    const botonLike = document.createElement('button');
+    botonLike.type = 'button';
+    botonLike.className = 'boton-reaccion';
+    if (resena.miReaccion === 'like') botonLike.classList.add('boton-reaccion--activo');
+    botonLike.textContent = `👍 ${resena.likes}`;
+    botonLike.disabled = deshabilitado;
+    botonLike.addEventListener('click', () => manejarReaccion(resena.id, 'like'));
+    contenedor.appendChild(botonLike);
+
+    const botonDislike = document.createElement('button');
+    botonDislike.type = 'button';
+    botonDislike.className = 'boton-reaccion';
+    if (resena.miReaccion === 'dislike') botonDislike.classList.add('boton-reaccion--activo');
+    botonDislike.textContent = `👎 ${resena.dislikes}`;
+    botonDislike.disabled = deshabilitado;
+    botonDislike.addEventListener('click', () => manejarReaccion(resena.id, 'dislike'));
+    contenedor.appendChild(botonDislike);
+
+    return contenedor;
+}
+
+function crearTarjetaResena(resena, usuarioActual) {
     const articulo = document.createElement('article');
     articulo.className = 'tarjeta-resena';
 
@@ -64,6 +92,8 @@ function crearTarjetaResena(resena) {
     });
     articulo.appendChild(fecha);
 
+    articulo.appendChild(crearReacciones(resena, usuarioActual));
+
     return articulo;
 }
 
@@ -78,7 +108,7 @@ function obtenerUsuarioActual() {
     }
 }
 
-function renderizarResenas(resenas) {
+function renderizarResenas(resenas, usuarioActual) {
     const lista = document.getElementById('lista-resenas');
     const mensaje = document.getElementById('mensaje-resenas');
     lista.innerHTML = '';
@@ -91,8 +121,23 @@ function renderizarResenas(resenas) {
 
     mensaje.hidden = true;
     resenas.forEach((resena) => {
-        lista.appendChild(crearTarjetaResena(resena));
+        lista.appendChild(crearTarjetaResena(resena, usuarioActual));
     });
+}
+
+async function manejarReaccion(resenaId, tipo) {
+    const mensaje = document.getElementById('mensaje-reacciones');
+    mensaje.hidden = true;
+
+    const resultado = await reaccionarResena(resenaId, tipo);
+
+    if (resultado.ok) {
+        await cargarDetalleRestaurante();
+        return;
+    }
+
+    mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo registrar tu reacción. Intenta de nuevo.';
+    mensaje.hidden = false;
 }
 
 function configurarFormularioResena(restaurante) {
@@ -235,7 +280,8 @@ async function cargarDetalleRestaurante() {
         });
     }
 
-    renderizarResenas(restaurante.resenas);
+    const usuarioActual = obtenerUsuarioActual();
+    renderizarResenas(restaurante.resenas, usuarioActual);
     configurarFormularioResena(restaurante);
 
     contenedor.hidden = false;
