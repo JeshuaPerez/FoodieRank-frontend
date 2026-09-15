@@ -449,3 +449,15 @@ a.tarjeta-restaurante:hover {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.menu-sesion__enlace {
+    display: block;
+    padding: var(--espacio-sm) 0;
+    color: var(--color-texto);
+    font-size: var(--texto-sm);
+    border-top: 1px solid var(--color-borde);
+}
+
+.menu-sesion__enlace:hover {
+    color: var(--color-primario);
+}

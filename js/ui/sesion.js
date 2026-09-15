@@ -1,3 +1,14 @@
+function obtenerUsuarioActual() {
+    const datos = localStorage.getItem('usuario');
+    if (!datos) return null;
+
+    try {
+        return JSON.parse(datos);
+    } catch (error) {
+        return null;
+    }
+}
+
 function obtenerIniciales(nombre) {
     return nombre
         .trim()
@@ -5,6 +16,10 @@ function obtenerIniciales(nombre) {
         .slice(0, 2)
         .map((parte) => parte.charAt(0).toUpperCase())
         .join('');
+}
+
+function calcularRutaBase() {
+    return window.location.pathname.includes('/pages/') ? '' : 'pages/';
 }
 
 function cerrarSesion() {
@@ -17,15 +32,8 @@ function actualizarNavSesion() {
     const contenedor = document.getElementById('nav-sesion');
     if (!contenedor) return;
 
-    const datos = localStorage.getItem('usuario');
-    if (!datos) return;
-
-    let usuario;
-    try {
-        usuario = JSON.parse(datos);
-    } catch (error) {
-        return;
-    }
+    const usuario = obtenerUsuarioActual();
+    if (!usuario) return;
 
     contenedor.innerHTML = '';
 
@@ -53,6 +61,14 @@ function actualizarNavSesion() {
     rol.className = 'menu-sesion__rol';
     rol.textContent = usuario.rol === 'admin' ? 'Administrador' : 'Cliente';
     panel.appendChild(rol);
+
+    if (usuario.rol === 'admin') {
+        const enlaceAdmin = document.createElement('a');
+        enlaceAdmin.className = 'menu-sesion__enlace';
+        enlaceAdmin.textContent = 'Panel de administración';
+        enlaceAdmin.href = `${calcularRutaBase()}admin.html`;
+        panel.appendChild(enlaceAdmin);
+    }
 
     const botonCerrar = document.createElement('button');
     botonCerrar.type = 'button';

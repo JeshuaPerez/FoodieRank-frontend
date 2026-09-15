@@ -1,0 +1,65 @@
+.seccion-admin {
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+    padding: var(--espacio-lg);
+    margin: var(--espacio-lg) 0;
+}
+
+.seccion-admin__cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--espacio-md);
+    gap: var(--espacio-md);
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-admin th,
+.tabla-admin td {
+    text-align: left;
+    padding: var(--espacio-sm) var(--espacio-md);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.tabla-admin th {
+    background-color: var(--color-fondo);
+    color: var(--color-texto-secundario);
+    font-size: var(--texto-sm);
+    text-transform: uppercase;
+}
+
+.tabla-admin__acciones {
+    display: flex;
+    gap: var(--espacio-sm);
+}
+
+.formulario-admin {
+    margin-top: var(--espacio-lg);
+    padding-top: var(--espacio-lg);
+    border-top: 1px solid var(--color-borde);
+    max-width: 480px;
+}
+
+.formulario-admin__acciones {
+    display: flex;
+    gap: var(--espacio-sm);
+    margin-top: var(--espacio-sm);
+}
+
+@media (max-width: 700px) {
+    .seccion-admin__cabecera {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tabla-admin {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

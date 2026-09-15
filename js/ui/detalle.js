@@ -97,17 +97,6 @@ function crearTarjetaResena(resena, usuarioActual) {
     return articulo;
 }
 
-function obtenerUsuarioActual() {
-    const datos = localStorage.getItem('usuario');
-    if (!datos) return null;
-
-    try {
-        return JSON.parse(datos);
-    } catch (error) {
-        return null;
-    }
-}
-
 function renderizarResenas(resenas, usuarioActual) {
     const lista = document.getElementById('lista-resenas');
     const mensaje = document.getElementById('mensaje-resenas');
