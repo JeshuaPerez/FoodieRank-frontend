@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del restaurante - FoodieRank</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body>
+    <header class="encabezado">
+        <div class="contenedor">
+            <a href="../index.html" class="logo">FoodieRank</a>
+            <nav class="nav-principal">
+                <a href="../index.html">Inicio</a>
+                <a href="busqueda.html">Buscar</a>
+            </nav>
+            <div class="nav-sesion">
+                <a href="login.html" class="btn btn-secundario">Iniciar sesión</a>
+                <a href="registro.html" class="btn btn-primario">Registrarse</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="contenedor">
+            <a href="busqueda.html" class="enlace-volver">&larr; Volver a la búsqueda</a>
+
+            <p id="mensaje-detalle" class="mensaje-estado" hidden></p>
+
+            <div id="info-restaurante" class="info-restaurante" hidden>
+                <div class="info-restaurante__cabecera">
+                    <img id="imagen-restaurante" class="info-restaurante__imagen" alt="">
+                    <div class="info-restaurante__datos">
+                        <span id="insignia-restaurante" class="insignia-ranking-detalle"></span>
+                        <h1 id="nombre-restaurante"></h1>
+                        <p id="categoria-restaurante" class="info-restaurante__categoria"></p>
+                        <p id="ubicacion-restaurante" class="info-restaurante__ubicacion"></p>
+                        <p id="descripcion-restaurante"></p>
+                    </div>
+                </div>
+
+                <h2>Platos</h2>
+                <p id="mensaje-platos" class="mensaje-estado" hidden></p>
+                <div class="grid-platos" id="grid-platos"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor">
+            <p>&copy; 2026 FoodieRank. Proyecto académico.</p>
+        </div>
+    </footer>
+
+    <script src="../js/api/config.js" defer></script>
+    <script src="../js/api/restaurantes.js" defer></script>
+    <script src="../js/ui/detalle.js" defer></script>
+</body>
+</html>

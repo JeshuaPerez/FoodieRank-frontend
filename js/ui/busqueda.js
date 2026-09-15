@@ -61,7 +61,7 @@ async function buscarRestaurantes(pagina = 1) {
     }
 
     restaurantes.forEach((restaurante) => {
-        grid.appendChild(crearTarjetaRestaurante(restaurante, '../assets/img/sin-imagen.svg'));
+        grid.appendChild(crearTarjetaRestaurante(restaurante, '../assets/img/sin-imagen.svg', 'detalle.html'));
     });
 
     estado.pagina = paginaActual;
