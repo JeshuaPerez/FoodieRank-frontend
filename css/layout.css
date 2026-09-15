@@ -155,3 +155,10 @@ main {
 .nav-sesion .btn-primario:hover {
     background-color: var(--color-acento-claro);
 }
+
+.mensaje-estado {
+    text-align: center;
+    color: var(--color-texto-secundario);
+    padding: var(--espacio-xl) 0;
+    font-size: var(--texto-base);
+}
