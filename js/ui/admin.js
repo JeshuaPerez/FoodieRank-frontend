@@ -213,6 +213,13 @@ function crearFilaRestaurante(restaurante) {
     botonAprobar.addEventListener('click', () => manejarAprobarRestaurante(restaurante, !restaurante.aprobado));
     celdaAcciones.appendChild(botonAprobar);
 
+    const botonPlatos = document.createElement('button');
+    botonPlatos.type = 'button';
+    botonPlatos.className = 'btn btn-secundario';
+    botonPlatos.textContent = 'Platos';
+    botonPlatos.addEventListener('click', () => abrirSeccionPlatos(restaurante));
+    celdaAcciones.appendChild(botonPlatos);
+
     const botonEditar = document.createElement('button');
     botonEditar.type = 'button';
     botonEditar.className = 'btn btn-secundario';
@@ -412,6 +419,217 @@ async function manejarEliminarRestaurante(restaurante) {
     mensaje.hidden = false;
 }
 
+let restauranteActualId = null;
+
+function crearFilaPlato(plato) {
+    const fila = document.createElement('tr');
+
+    const celdaNombre = document.createElement('td');
+    celdaNombre.textContent = plato.nombre;
+    fila.appendChild(celdaNombre);
+
+    const celdaPrecio = document.createElement('td');
+    celdaPrecio.textContent = `$${plato.precio.toFixed(2)}`;
+    fila.appendChild(celdaPrecio);
+
+    const celdaEstado = document.createElement('td');
+    const insignia = document.createElement('span');
+    insignia.className = plato.aprobado
+        ? 'insignia-estado insignia-estado--aprobado'
+        : 'insignia-estado insignia-estado--pendiente';
+    insignia.textContent = plato.aprobado ? 'Aprobado' : 'Pendiente';
+    celdaEstado.appendChild(insignia);
+    fila.appendChild(celdaEstado);
+
+    const celdaAcciones = document.createElement('td');
+    celdaAcciones.className = 'tabla-admin__acciones';
+
+    const botonAprobar = document.createElement('button');
+    botonAprobar.type = 'button';
+    botonAprobar.className = 'btn btn-secundario';
+    botonAprobar.textContent = plato.aprobado ? 'Rechazar' : 'Aprobar';
+    botonAprobar.addEventListener('click', () => manejarAprobarPlato(plato, !plato.aprobado));
+    celdaAcciones.appendChild(botonAprobar);
+
+    const botonEditar = document.createElement('button');
+    botonEditar.type = 'button';
+    botonEditar.className = 'btn btn-secundario';
+    botonEditar.textContent = 'Editar';
+    botonEditar.addEventListener('click', () => abrirFormularioPlato(plato));
+    celdaAcciones.appendChild(botonEditar);
+
+    const botonEliminar = document.createElement('button');
+    botonEliminar.type = 'button';
+    botonEliminar.className = 'btn btn-secundario';
+    botonEliminar.textContent = 'Eliminar';
+    botonEliminar.addEventListener('click', () => manejarEliminarPlato(plato));
+    celdaAcciones.appendChild(botonEliminar);
+
+    fila.appendChild(celdaAcciones);
+    return fila;
+}
+
+async function cargarPlatos() {
+    const mensaje = document.getElementById('mensaje-platos-admin');
+    const tabla = document.getElementById('tabla-platos');
+    const cuerpo = document.getElementById('cuerpo-platos');
+
+    const resultado = await listarPlatosPorRestaurante(restauranteActualId);
+
+    if (!resultado.ok || !resultado.cuerpo) {
+        mensaje.textContent = 'No se pudieron cargar los platos. Verifica tu conexión con el servidor.';
+        mensaje.hidden = false;
+        tabla.hidden = true;
+        return;
+    }
+
+    const platos = resultado.cuerpo.datos;
+    cuerpo.innerHTML = '';
+
+    if (platos.length === 0) {
+        mensaje.textContent = 'Este restaurante todavía no tiene platos registrados.';
+        mensaje.hidden = false;
+        tabla.hidden = true;
+        return;
+    }
+
+    mensaje.hidden = true;
+    tabla.hidden = false;
+    platos.forEach((plato) => {
+        cuerpo.appendChild(crearFilaPlato(plato));
+    });
+}
+
+function abrirSeccionPlatos(restaurante) {
+    restauranteActualId = restaurante.id;
+    document.getElementById('titulo-seccion-platos').textContent = `Platos de ${restaurante.nombre}`;
+    document.getElementById('form-plato').hidden = true;
+    document.getElementById('seccion-platos').hidden = false;
+    cargarPlatos();
+    document.getElementById('seccion-platos').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cerrarSeccionPlatos() {
+    document.getElementById('seccion-platos').hidden = true;
+    restauranteActualId = null;
+}
+
+function limpiarErroresPlato() {
+    ['nombre', 'descripcion', 'precio', 'imagen'].forEach((campo) => {
+        const elemento = document.getElementById(`error-${campo}-plato`);
+        elemento.hidden = true;
+        elemento.textContent = '';
+    });
+
+    const mensajeGeneral = document.getElementById('mensaje-general-plato');
+    mensajeGeneral.hidden = true;
+    mensajeGeneral.textContent = '';
+    mensajeGeneral.className = '';
+}
+
+function mostrarErroresPlato(cuerpo) {
+    if (cuerpo && Array.isArray(cuerpo.datos)) {
+        cuerpo.datos.forEach((error) => {
+            const campo = document.getElementById(`error-${error.campo}-plato`);
+            if (campo) {
+                campo.textContent = error.mensaje;
+                campo.hidden = false;
+            }
+        });
+        return;
+    }
+
+    const mensajeGeneral = document.getElementById('mensaje-general-plato');
+    mensajeGeneral.textContent = cuerpo?.mensaje || 'No se pudo guardar el plato. Intenta de nuevo.';
+    mensajeGeneral.className = 'mensaje-error-general';
+    mensajeGeneral.hidden = false;
+}
+
+function abrirFormularioPlato(plato = null) {
+    const formulario = document.getElementById('form-plato');
+    const titulo = document.getElementById('titulo-form-plato');
+
+    limpiarErroresPlato();
+    formulario.reset();
+
+    if (plato) {
+        formulario.dataset.editId = plato.id;
+        titulo.textContent = 'Editar plato';
+        document.getElementById('nombre-plato-form').value = plato.nombre;
+        document.getElementById('descripcion-plato-form').value = plato.descripcion || '';
+        document.getElementById('precio-plato-form').value = plato.precio;
+        document.getElementById('imagen-plato-form').value = plato.imagen || '';
+    } else {
+        delete formulario.dataset.editId;
+        titulo.textContent = 'Nuevo plato';
+    }
+
+    formulario.hidden = false;
+}
+
+function cerrarFormularioPlato() {
+    const formulario = document.getElementById('form-plato');
+    formulario.hidden = true;
+    formulario.reset();
+    limpiarErroresPlato();
+    delete formulario.dataset.editId;
+}
+
+async function manejarEnvioPlato(evento) {
+    evento.preventDefault();
+    limpiarErroresPlato();
+
+    const formulario = evento.target;
+    const nombre = document.getElementById('nombre-plato-form').value.trim();
+    const descripcion = document.getElementById('descripcion-plato-form').value.trim();
+    const precio = document.getElementById('precio-plato-form').value;
+    const imagen = document.getElementById('imagen-plato-form').value.trim();
+    const idEdicion = formulario.dataset.editId;
+
+    const datos = { nombre, descripcion, precio: Number(precio), imagen };
+
+    const resultado = idEdicion
+        ? await actualizarPlato(idEdicion, datos)
+        : await crearPlato(restauranteActualId, datos);
+
+    if (resultado.ok) {
+        cerrarFormularioPlato();
+        await cargarPlatos();
+        return;
+    }
+
+    mostrarErroresPlato(resultado.cuerpo);
+}
+
+async function manejarAprobarPlato(plato, aprobado) {
+    const mensaje = document.getElementById('mensaje-platos-admin');
+    const resultado = await aprobarPlato(plato.id, aprobado);
+
+    if (resultado.ok) {
+        await cargarPlatos();
+        return;
+    }
+
+    mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo actualizar el estado del plato.';
+    mensaje.hidden = false;
+}
+
+async function manejarEliminarPlato(plato) {
+    const confirmado = confirm(`¿Eliminar el plato "${plato.nombre}"? Esta acción no se puede deshacer.`);
+    if (!confirmado) return;
+
+    const mensaje = document.getElementById('mensaje-platos-admin');
+    const resultado = await eliminarPlato(plato.id);
+
+    if (resultado.ok) {
+        await cargarPlatos();
+        return;
+    }
+
+    mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo eliminar el plato.';
+    mensaje.hidden = false;
+}
+
 document.getElementById('btn-nueva-categoria').addEventListener('click', () => abrirFormularioCategoria());
 document.getElementById('btn-cancelar-categoria').addEventListener('click', cerrarFormularioCategoria);
 document.getElementById('form-categoria').addEventListener('submit', manejarEnvioCategoria);
@@ -419,6 +637,10 @@ configurarFiltroRestaurantes();
 document.getElementById('btn-nuevo-restaurante').addEventListener('click', () => abrirFormularioRestaurante());
 document.getElementById('btn-cancelar-restaurante').addEventListener('click', cerrarFormularioRestaurante);
 document.getElementById('form-restaurante').addEventListener('submit', manejarEnvioRestaurante);
+document.getElementById('btn-nuevo-plato').addEventListener('click', () => abrirFormularioPlato());
+document.getElementById('btn-cancelar-plato').addEventListener('click', cerrarFormularioPlato);
+document.getElementById('form-plato').addEventListener('submit', manejarEnvioPlato);
+document.getElementById('btn-cerrar-platos').addEventListener('click', cerrarSeccionPlatos);
 
 if (verificarAccesoAdmin()) {
     cargarCategorias();

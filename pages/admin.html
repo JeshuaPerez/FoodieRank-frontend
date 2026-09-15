@@ -144,6 +144,65 @@
                         </div>
                     </form>
                 </section>
+
+                <section class="seccion-admin" id="seccion-platos" hidden>
+                    <div class="seccion-admin__cabecera">
+                        <h2 id="titulo-seccion-platos">Platos</h2>
+                        <div class="seccion-admin__controles">
+                            <button type="button" id="btn-nuevo-plato" class="btn btn-primario">Nuevo plato</button>
+                            <button type="button" id="btn-cerrar-platos" class="btn btn-secundario">Cerrar</button>
+                        </div>
+                    </div>
+
+                    <p id="mensaje-platos-admin" class="mensaje-estado" hidden></p>
+
+                    <table class="tabla-admin" id="tabla-platos" hidden>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo-platos"></tbody>
+                    </table>
+
+                    <form id="form-plato" class="formulario-admin" novalidate hidden>
+                        <h3 id="titulo-form-plato">Nuevo plato</h3>
+
+                        <div class="campo-formulario">
+                            <label for="nombre-plato-form">Nombre</label>
+                            <input type="text" id="nombre-plato-form" name="nombre" required>
+                            <span class="mensaje-error-campo" id="error-nombre-plato" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="descripcion-plato-form">Descripción (opcional)</label>
+                            <textarea id="descripcion-plato-form" name="descripcion" rows="3"></textarea>
+                            <span class="mensaje-error-campo" id="error-descripcion-plato" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="precio-plato-form">Precio</label>
+                            <input type="number" id="precio-plato-form" name="precio" min="0" step="0.01" required>
+                            <span class="mensaje-error-campo" id="error-precio-plato" hidden></span>
+                        </div>
+
+                        <div class="campo-formulario">
+                            <label for="imagen-plato-form">Imagen (URL, opcional)</label>
+                            <input type="url" id="imagen-plato-form" name="imagen">
+                            <span class="mensaje-error-campo" id="error-imagen-plato" hidden></span>
+                        </div>
+
+                        <p id="mensaje-general-plato" hidden></p>
+
+                        <div class="formulario-admin__acciones">
+                            <button type="submit" class="btn btn-primario" id="btn-guardar-plato">Guardar</button>
+                            <button type="button" class="btn btn-secundario" id="btn-cancelar-plato">Cancelar</button>
+                        </div>
+                    </form>
+                </section>
             </div>
         </div>
     </main>
@@ -158,6 +217,7 @@
     <script src="../js/ui/sesion.js" defer></script>
     <script src="../js/api/categorias.js" defer></script>
     <script src="../js/api/restaurantes.js" defer></script>
+    <script src="../js/api/platos.js" defer></script>
     <script src="../js/ui/admin.js" defer></script>
 </body>
 </html>
