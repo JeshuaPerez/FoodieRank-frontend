@@ -1,3 +1,1 @@
-git add js/api/config.js
-git commit -m "chore(config): apuntar API_BASE_URL al backend desplegado en Render"
-git push -u origin feature/configuracion-produccion
+const API_BASE_URL = 'https://foodierank-backend.onrender.com/api';
