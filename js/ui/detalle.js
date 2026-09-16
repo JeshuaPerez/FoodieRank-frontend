@@ -123,6 +123,57 @@ function renderizarResenas(resenas, usuarioActual) {
     });
 }
 
+function renderizarGraficoCalificaciones(resenas) {
+    const contenedor = document.getElementById('grafico-barras');
+    const mensaje = document.getElementById('mensaje-grafico');
+    contenedor.innerHTML = '';
+
+    const total = resenas.length;
+
+    if (total === 0) {
+        mensaje.textContent = 'Todavía no hay calificaciones para mostrar.';
+        mensaje.hidden = false;
+        return;
+    }
+
+    mensaje.hidden = true;
+
+    const conteo = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    resenas.forEach((resena) => {
+        conteo[resena.calificacion] = (conteo[resena.calificacion] || 0) + 1;
+    });
+
+    [5, 4, 3, 2, 1].forEach((estrellas) => {
+        const cantidad = conteo[estrellas];
+        const porcentaje = (cantidad / total) * 100;
+
+        const fila = document.createElement('div');
+        fila.className = 'grafico-barras__fila';
+
+        const etiqueta = document.createElement('span');
+        etiqueta.className = 'grafico-barras__etiqueta';
+        etiqueta.textContent = `${estrellas} ★`;
+        fila.appendChild(etiqueta);
+
+        const pista = document.createElement('div');
+        pista.className = 'grafico-barras__pista';
+
+        const barra = document.createElement('div');
+        barra.className = 'grafico-barras__barra';
+        barra.style.width = `${porcentaje}%`;
+        pista.appendChild(barra);
+
+        fila.appendChild(pista);
+
+        const valor = document.createElement('span');
+        valor.className = 'grafico-barras__valor';
+        valor.textContent = cantidad;
+        fila.appendChild(valor);
+
+        contenedor.appendChild(fila);
+    });
+}
+
 async function manejarReaccion(resenaId, tipo) {
     const mensaje = document.getElementById('mensaje-reacciones');
     mensaje.hidden = true;
@@ -295,6 +346,7 @@ async function cargarDetalleRestaurante() {
     }
 
     const usuarioActual = obtenerUsuarioActual();
+    renderizarGraficoCalificaciones(restaurante.resenas);
     renderizarResenas(restaurante.resenas, usuarioActual);
     configurarFormularioResena(restaurante);
 
