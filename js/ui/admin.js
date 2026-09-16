@@ -162,7 +162,7 @@ async function manejarEnvioCategoria(evento) {
 }
 
 async function manejarEliminarCategoria(categoria) {
-    const confirmado = confirm(`¿Eliminar la categoría "${categoria.nombre}"? Esta acción no se puede deshacer.`);
+    const confirmado = await confirmarAccion(`¿Eliminar la categoría "${categoria.nombre}"? Esta acción no se puede deshacer.`);
     if (!confirmado) return;
 
     const mensaje = document.getElementById('mensaje-categorias');
@@ -404,7 +404,7 @@ async function manejarEnvioRestaurante(evento) {
 }
 
 async function manejarEliminarRestaurante(restaurante) {
-    const confirmado = confirm(`¿Eliminar el restaurante "${restaurante.nombre}"? Esta acción también elimina sus platos y reseñas, y no se puede deshacer.`);
+    const confirmado = await confirmarAccion(`¿Eliminar el restaurante "${restaurante.nombre}"? Esta acción también elimina sus platos y reseñas, y no se puede deshacer.`);
     if (!confirmado) return;
 
     const mensaje = document.getElementById('mensaje-restaurantes');
@@ -615,7 +615,7 @@ async function manejarAprobarPlato(plato, aprobado) {
 }
 
 async function manejarEliminarPlato(plato) {
-    const confirmado = confirm(`¿Eliminar el plato "${plato.nombre}"? Esta acción no se puede deshacer.`);
+    const confirmado = await confirmarAccion(`¿Eliminar el plato "${plato.nombre}"? Esta acción no se puede deshacer.`);
     if (!confirmado) return;
 
     const mensaje = document.getElementById('mensaje-platos-admin');
@@ -636,13 +636,4 @@ document.getElementById('form-categoria').addEventListener('submit', manejarEnvi
 configurarFiltroRestaurantes();
 document.getElementById('btn-nuevo-restaurante').addEventListener('click', () => abrirFormularioRestaurante());
 document.getElementById('btn-cancelar-restaurante').addEventListener('click', cerrarFormularioRestaurante);
-document.getElementById('form-restaurante').addEventListener('submit', manejarEnvioRestaurante);
-document.getElementById('btn-nuevo-plato').addEventListener('click', () => abrirFormularioPlato());
-document.getElementById('btn-cancelar-plato').addEventListener('click', cerrarFormularioPlato);
-document.getElementById('form-plato').addEventListener('submit', manejarEnvioPlato);
-document.getElementById('btn-cerrar-platos').addEventListener('click', cerrarSeccionPlatos);
-
-if (verificarAccesoAdmin()) {
-    cargarCategorias();
-    cargarRestaurantes();
-}
+document.getElementById('form-restaurante').addEventListener('submit',
