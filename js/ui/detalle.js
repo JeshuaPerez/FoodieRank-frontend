@@ -94,6 +94,15 @@ function crearTarjetaResena(resena, usuarioActual) {
 
     articulo.appendChild(crearReacciones(resena, usuarioActual));
 
+    if (usuarioActual?.rol === 'admin') {
+        const botonEliminar = document.createElement('button');
+        botonEliminar.type = 'button';
+        botonEliminar.className = 'btn btn-secundario boton-eliminar-resena';
+        botonEliminar.textContent = 'Eliminar';
+        botonEliminar.addEventListener('click', () => manejarEliminarResena(resena.id));
+        articulo.appendChild(botonEliminar);
+    }
+
     return articulo;
 }
 
@@ -126,6 +135,22 @@ async function manejarReaccion(resenaId, tipo) {
     }
 
     mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo registrar tu reacción. Intenta de nuevo.';
+    mensaje.hidden = false;
+}
+
+async function manejarEliminarResena(id) {
+    const confirmado = await confirmarAccion('¿Eliminar esta reseña? Esta acción no se puede deshacer.');
+    if (!confirmado) return;
+
+    const mensaje = document.getElementById('mensaje-resenas');
+    const resultado = await eliminarResena(id);
+
+    if (resultado.ok) {
+        await cargarDetalleRestaurante();
+        return;
+    }
+
+    mensaje.textContent = resultado.cuerpo?.mensaje || 'No se pudo eliminar la reseña.';
     mensaje.hidden = false;
 }
 

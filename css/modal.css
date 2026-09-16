@@ -1,0 +1,45 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal-caja {
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta-hover);
+    padding: var(--espacio-lg);
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-caja p {
+    margin-bottom: var(--espacio-lg);
+    color: var(--color-texto);
+}
+
+.modal-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--espacio-sm);
+}
+
+.btn-peligro {
+    background-color: var(--color-error);
+    color: var(--color-superficie);
+}
+
+.btn-peligro:hover {
+    opacity: 0.9;
+}

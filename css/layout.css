@@ -461,3 +461,9 @@ a.tarjeta-restaurante:hover {
 .menu-sesion__enlace:hover {
     color: var(--color-primario);
 }
+
+.boton-eliminar-resena {
+    margin-top: var(--espacio-sm);
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
