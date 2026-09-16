@@ -467,3 +467,63 @@ a.tarjeta-restaurante:hover {
     color: var(--color-error);
     border-color: var(--color-error);
 }
+
+.grafico-calificaciones {
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+    padding: var(--espacio-lg);
+    margin: var(--espacio-lg) 0;
+}
+
+.grafico-calificaciones h2 {
+    margin-bottom: var(--espacio-md);
+}
+
+.grafico-barras {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-md);
+}
+
+.grafico-barras__fila {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-sm);
+}
+
+.grafico-barras__etiqueta {
+    width: 48px;
+    flex-shrink: 0;
+    font-size: var(--texto-sm);
+    color: var(--color-texto-secundario);
+}
+
+.grafico-barras__pista {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 999px;
+    height: 14px;
+    overflow: hidden;
+}
+
+.grafico-barras__barra {
+    height: 100%;
+    background-color: var(--color-acento);
+    border-radius: 999px;
+    transition: width var(--transicion-normal);
+}
+
+.grafico-barras__valor {
+    width: 28px;
+    flex-shrink: 0;
+    text-align: right;
+    font-size: var(--texto-sm);
+    color: var(--color-texto-secundario);
+}
+
+@media (max-width: 480px) {
+    .grafico-barras__etiqueta {
+        width: 36px;
+    }
+}
