@@ -636,4 +636,13 @@ document.getElementById('form-categoria').addEventListener('submit', manejarEnvi
 configurarFiltroRestaurantes();
 document.getElementById('btn-nuevo-restaurante').addEventListener('click', () => abrirFormularioRestaurante());
 document.getElementById('btn-cancelar-restaurante').addEventListener('click', cerrarFormularioRestaurante);
-document.getElementById('form-restaurante').addEventListener('submit',
+document.getElementById('form-restaurante').addEventListener('submit', manejarEnvioRestaurante);
+document.getElementById('btn-nuevo-plato').addEventListener('click', () => abrirFormularioPlato());
+document.getElementById('btn-cancelar-plato').addEventListener('click', cerrarFormularioPlato);
+document.getElementById('form-plato').addEventListener('submit', manejarEnvioPlato);
+document.getElementById('btn-cerrar-platos').addEventListener('click', cerrarSeccionPlatos);
+
+if (verificarAccesoAdmin()) {
+    cargarCategorias();
+    cargarRestaurantes();
+}
