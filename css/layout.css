@@ -71,6 +71,17 @@ main {
     color: var(--color-acento-claro);
 }
 
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .grid-restaurantes {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -85,6 +96,7 @@ main {
     overflow: hidden;
     position: relative;
     transition: box-shadow var(--transicion-normal), transform var(--transicion-normal);
+    animation: aparecer 0.4s ease-out both;
 }
 
 .tarjeta-restaurante:hover {
@@ -135,6 +147,11 @@ main {
     align-items: center;
     justify-content: center;
     box-shadow: var(--sombra-tarjeta);
+    transition: transform var(--transicion-normal);
+}
+
+.tarjeta-restaurante:hover .insignia-ranking {
+    transform: scale(1.1);
 }
 
 .nav-sesion .btn-secundario {
@@ -271,6 +288,13 @@ a.tarjeta-restaurante:hover {
     border-radius: var(--radio-borde);
     box-shadow: var(--sombra-tarjeta);
     overflow: hidden;
+    transition: box-shadow var(--transicion-normal), transform var(--transicion-normal);
+    animation: aparecer 0.4s ease-out both;
+}
+
+.tarjeta-plato:hover {
+    box-shadow: var(--sombra-tarjeta-hover);
+    transform: translateY(-4px);
 }
 
 .tarjeta-plato img {
@@ -313,6 +337,12 @@ a.tarjeta-restaurante:hover {
     border-radius: var(--radio-borde);
     box-shadow: var(--sombra-tarjeta);
     padding: var(--espacio-md);
+    transition: box-shadow var(--transicion-normal);
+    animation: aparecer 0.4s ease-out both;
+}
+
+.tarjeta-resena:hover {
+    box-shadow: var(--sombra-tarjeta-hover);
 }
 
 .tarjeta-resena__cabecera {
@@ -377,6 +407,11 @@ a.tarjeta-restaurante:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform var(--transicion-rapida);
+}
+
+.avatar-sesion:hover {
+    transform: scale(1.08);
 }
 
 .menu-sesion__panel {
@@ -436,6 +471,11 @@ a.tarjeta-restaurante:hover {
     font-size: var(--texto-xs);
     color: var(--color-texto-secundario);
     cursor: pointer;
+    transition: transform var(--transicion-rapida), background-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+.boton-reaccion:hover:not(:disabled) {
+    transform: translateY(-2px);
 }
 
 .boton-reaccion--activo {
@@ -548,6 +588,15 @@ a.tarjeta-restaurante:hover {
     margin-bottom: var(--espacio-xl);
 }
 
+@keyframes flotar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
 .hero-buscador::before {
     content: '';
     position: absolute;
@@ -557,6 +606,7 @@ a.tarjeta-restaurante:hover {
     background-color: rgba(255, 255, 255, 0.05);
     top: -160px;
     right: -100px;
+    animation: flotar 6s ease-in-out infinite;
 }
 
 .hero-buscador::after {
@@ -568,6 +618,7 @@ a.tarjeta-restaurante:hover {
     background-color: rgba(184, 151, 78, 0.18);
     bottom: -120px;
     left: -70px;
+    animation: flotar 7s ease-in-out infinite reverse;
 }
 
 .hero-buscador__interior {
