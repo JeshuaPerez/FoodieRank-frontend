@@ -539,3 +539,73 @@ a.tarjeta-restaurante:hover {
         width: 56px;
     }
 }
+
+.hero-buscador {
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-primario-oscuro) 100%);
+    position: relative;
+    overflow: hidden;
+    padding: var(--espacio-xxl) 0;
+    margin-bottom: var(--espacio-xl);
+}
+
+.hero-buscador::before {
+    content: '';
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+    top: -160px;
+    right: -100px;
+}
+
+.hero-buscador::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background-color: rgba(184, 151, 78, 0.18);
+    bottom: -120px;
+    left: -70px;
+}
+
+.hero-buscador__interior {
+    position: relative;
+}
+
+.hero-buscador__contenido {
+    max-width: 640px;
+    margin: 0 auto var(--espacio-xl);
+    text-align: center;
+}
+
+.hero-buscador__contenido h1 {
+    color: var(--color-superficie);
+    margin-bottom: var(--espacio-sm);
+}
+
+.hero-buscador__contenido p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: var(--texto-md);
+}
+
+.hero-buscador .barra-filtros {
+    position: relative;
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta-hover);
+    padding: var(--espacio-lg);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+    .hero-buscador {
+        padding: var(--espacio-xl) 0;
+    }
+
+    .hero-buscador__contenido {
+        margin-bottom: var(--espacio-lg);
+    }
+}

@@ -21,10 +21,12 @@
     </header>
 
     <main>
-        <div class="contenedor">
-            <section class="hero-buscador">
-                <h1>Descubre los restaurantes mejor calificados</h1>
-                <p>Explora, califica y encuentra tu próximo lugar favorito para comer.</p>
+        <section class="hero-buscador">
+            <div class="contenedor hero-buscador__interior">
+                <div class="hero-buscador__contenido">
+                    <h1>Descubre los restaurantes mejor calificados</h1>
+                    <p>Explora, califica y encuentra tu próximo lugar favorito para comer.</p>
+                </div>
 
                 <form id="form-filtros" class="barra-filtros" novalidate>
                     <div class="campo-filtro">
@@ -50,8 +52,10 @@
 
                     <button type="submit" class="btn btn-primario">Buscar</button>
                 </form>
-            </section>
+            </div>
+        </section>
 
+        <div class="contenedor">
             <section>
                 <h2>Restaurantes</h2>
                 <p id="mensaje-restaurantes" class="mensaje-estado" hidden></p>
