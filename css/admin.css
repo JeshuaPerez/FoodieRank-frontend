@@ -54,6 +54,13 @@
     max-width: 480px;
 }
 
+.modal-caja--formulario .formulario-admin {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    max-width: none;
+}
+
 .formulario-admin__acciones {
     display: flex;
     gap: var(--espacio-sm);
