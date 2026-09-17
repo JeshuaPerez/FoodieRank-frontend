@@ -30,13 +30,15 @@
 
             <div id="info-restaurante" class="info-restaurante" hidden>
                 <div class="info-restaurante__cabecera">
-                    <img id="imagen-restaurante" class="info-restaurante__imagen" alt="">
-                    <div class="info-restaurante__datos">
+                    <div class="info-restaurante__imagen-contenedor">
+                        <img id="imagen-restaurante" class="info-restaurante__imagen" alt="">
                         <span id="insignia-restaurante" class="insignia-ranking-detalle"></span>
+                    </div>
+                    <div class="info-restaurante__datos">
                         <h1 id="nombre-restaurante"></h1>
                         <p id="categoria-restaurante" class="info-restaurante__categoria"></p>
                         <p id="ubicacion-restaurante" class="info-restaurante__ubicacion"></p>
-                        <p id="descripcion-restaurante"></p>
+                        <p id="descripcion-restaurante" class="info-restaurante__descripcion"></p>
                     </div>
                 </div>
 
@@ -46,45 +48,54 @@
 
                 <section class="grafico-calificaciones">
                     <h2>Distribución de calificaciones</h2>
-                    <p id="subtitulo-grafico" class="grafico-calificaciones__subtitulo" hidden></p>
                     <p id="mensaje-grafico" class="mensaje-estado" hidden></p>
-                    <div class="grafico-barras" id="grafico-barras"></div>
+                    <div class="grafico-calificaciones__cuerpo" id="grafico-calificaciones-cuerpo" hidden>
+                        <div class="grafico-calificaciones__resumen">
+                            <span class="grafico-calificaciones__numero" id="promedio-numero"></span>
+                            <span class="grafico-calificaciones__estrellas" id="promedio-estrellas"></span>
+                            <span class="grafico-calificaciones__total" id="promedio-total"></span>
+                        </div>
+                        <div class="grafico-barras" id="grafico-barras"></div>
+                    </div>
                 </section>
 
-                <h2>Reseñas</h2>
-                <p id="mensaje-resenas" class="mensaje-estado" hidden></p>
-                <div class="lista-resenas" id="lista-resenas"></div>
+                <section class="seccion-resenas">
+                    <h2>Reseñas</h2>
+                    <p id="mensaje-resenas" class="mensaje-estado" hidden></p>
+                    <p id="mensaje-reacciones" class="mensaje-estado" hidden></p>
+                    <p id="aviso-resena" class="mensaje-estado" hidden></p>
 
-                <p id="mensaje-reacciones" class="mensaje-estado" hidden></p>
+                    <div class="seccion-resenas__cuerpo">
+                        <div class="lista-resenas" id="lista-resenas"></div>
 
-                <p id="aviso-resena" class="mensaje-estado" hidden></p>
+                        <form id="form-resena" class="formulario-resena" novalidate hidden>
+                            <h3>Deja tu reseña</h3>
 
-                <form id="form-resena" class="formulario-resena" novalidate hidden>
-                    <h3>Deja tu reseña</h3>
+                            <div class="campo-formulario">
+                                <label for="calificacion">Calificación</label>
+                                <select id="calificacion" name="calificacion" required>
+                                    <option value="">Selecciona una calificación</option>
+                                    <option value="5">5 - Excelente</option>
+                                    <option value="4">4 - Muy bueno</option>
+                                    <option value="3">3 - Bueno</option>
+                                    <option value="2">2 - Regular</option>
+                                    <option value="1">1 - Malo</option>
+                                </select>
+                                <span class="mensaje-error-campo" id="error-calificacion" hidden></span>
+                            </div>
 
-                    <div class="campo-formulario">
-                        <label for="calificacion">Calificación</label>
-                        <select id="calificacion" name="calificacion" required>
-                            <option value="">Selecciona una calificación</option>
-                            <option value="5">5 - Excelente</option>
-                            <option value="4">4 - Muy bueno</option>
-                            <option value="3">3 - Bueno</option>
-                            <option value="2">2 - Regular</option>
-                            <option value="1">1 - Malo</option>
-                        </select>
-                        <span class="mensaje-error-campo" id="error-calificacion" hidden></span>
+                            <div class="campo-formulario">
+                                <label for="comentario">Comentario</label>
+                                <textarea id="comentario" name="comentario" rows="4" required></textarea>
+                                <span class="mensaje-error-campo" id="error-comentario" hidden></span>
+                            </div>
+
+                            <p id="mensaje-general-resena" hidden></p>
+
+                            <button type="submit" class="btn btn-primario">Publicar reseña</button>
+                        </form>
                     </div>
-
-                    <div class="campo-formulario">
-                        <label for="comentario">Comentario</label>
-                        <textarea id="comentario" name="comentario" rows="4" required></textarea>
-                        <span class="mensaje-error-campo" id="error-comentario" hidden></span>
-                    </div>
-
-                    <p id="mensaje-general-resena" hidden></p>
-
-                    <button type="submit" class="btn btn-primario">Publicar reseña</button>
-                </form>
+                </section>
             </div>
         </div>
     </main>
