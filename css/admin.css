@@ -41,6 +41,15 @@
     text-transform: uppercase;
 }
 
+.tabla-admin tbody tr {
+    animation: aparecer 0.35s ease-out both;
+    transition: background-color var(--transicion-rapida);
+}
+
+.tabla-admin tbody tr:hover {
+    background-color: var(--color-fondo);
+}
+
 .tabla-admin__acciones {
     display: flex;
     gap: var(--espacio-sm);
