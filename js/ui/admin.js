@@ -128,12 +128,12 @@ function abrirFormularioCategoria(categoria = null) {
         titulo.textContent = 'Nueva categoría';
     }
 
-    formulario.hidden = false;
+    document.getElementById('overlay-form-categoria').hidden = false;
 }
 
 function cerrarFormularioCategoria() {
     const formulario = document.getElementById('form-categoria');
-    formulario.hidden = true;
+    document.getElementById('overlay-form-categoria').hidden = true;
     formulario.reset();
     limpiarErroresCategoria();
     delete formulario.dataset.editId;
@@ -365,12 +365,12 @@ async function abrirFormularioRestaurante(restaurante = null) {
         titulo.textContent = 'Nuevo restaurante';
     }
 
-    formulario.hidden = false;
+    document.getElementById('overlay-form-restaurante').hidden = false;
 }
 
 function cerrarFormularioRestaurante() {
     const formulario = document.getElementById('form-restaurante');
-    formulario.hidden = true;
+    document.getElementById('overlay-form-restaurante').hidden = true;
     formulario.reset();
     limpiarErroresRestaurante();
     delete formulario.dataset.editId;
@@ -503,7 +503,7 @@ async function cargarPlatos() {
 function abrirSeccionPlatos(restaurante) {
     restauranteActualId = restaurante.id;
     document.getElementById('titulo-seccion-platos').textContent = `Platos de ${restaurante.nombre}`;
-    document.getElementById('form-plato').hidden = true;
+    document.getElementById('overlay-form-plato').hidden = true;
     document.getElementById('seccion-platos').hidden = false;
     cargarPlatos();
     document.getElementById('seccion-platos').scrollIntoView({ behavior: 'smooth' });
@@ -564,12 +564,12 @@ function abrirFormularioPlato(plato = null) {
         titulo.textContent = 'Nuevo plato';
     }
 
-    formulario.hidden = false;
+    document.getElementById('overlay-form-plato').hidden = false;
 }
 
 function cerrarFormularioPlato() {
     const formulario = document.getElementById('form-plato');
-    formulario.hidden = true;
+    document.getElementById('overlay-form-plato').hidden = true;
     formulario.reset();
     limpiarErroresPlato();
     delete formulario.dataset.editId;
@@ -630,16 +630,31 @@ async function manejarEliminarPlato(plato) {
     mensaje.hidden = false;
 }
 
+function cerrarOverlaySiEsFondo(evento, overlay, cerrar) {
+    if (evento.target === overlay) cerrar();
+}
+
 document.getElementById('btn-nueva-categoria').addEventListener('click', () => abrirFormularioCategoria());
 document.getElementById('btn-cancelar-categoria').addEventListener('click', cerrarFormularioCategoria);
 document.getElementById('form-categoria').addEventListener('submit', manejarEnvioCategoria);
+document.getElementById('overlay-form-categoria').addEventListener('click', (evento) => {
+    cerrarOverlaySiEsFondo(evento, document.getElementById('overlay-form-categoria'), cerrarFormularioCategoria);
+});
+
 configurarFiltroRestaurantes();
 document.getElementById('btn-nuevo-restaurante').addEventListener('click', () => abrirFormularioRestaurante());
 document.getElementById('btn-cancelar-restaurante').addEventListener('click', cerrarFormularioRestaurante);
 document.getElementById('form-restaurante').addEventListener('submit', manejarEnvioRestaurante);
+document.getElementById('overlay-form-restaurante').addEventListener('click', (evento) => {
+    cerrarOverlaySiEsFondo(evento, document.getElementById('overlay-form-restaurante'), cerrarFormularioRestaurante);
+});
+
 document.getElementById('btn-nuevo-plato').addEventListener('click', () => abrirFormularioPlato());
 document.getElementById('btn-cancelar-plato').addEventListener('click', cerrarFormularioPlato);
 document.getElementById('form-plato').addEventListener('submit', manejarEnvioPlato);
+document.getElementById('overlay-form-plato').addEventListener('click', (evento) => {
+    cerrarOverlaySiEsFondo(evento, document.getElementById('overlay-form-plato'), cerrarFormularioPlato);
+});
 document.getElementById('btn-cerrar-platos').addEventListener('click', cerrarSeccionPlatos);
 
 if (verificarAccesoAdmin()) {
