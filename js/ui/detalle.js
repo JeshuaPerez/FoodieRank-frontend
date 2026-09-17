@@ -123,16 +123,19 @@ function renderizarResenas(resenas, usuarioActual) {
     });
 }
 
-function renderizarGraficoCalificaciones(resenas) {
+function renderizarGraficoCalificaciones(resenas, rankingPonderado) {
     const contenedor = document.getElementById('grafico-barras');
     const mensaje = document.getElementById('mensaje-grafico');
-    const subtitulo = document.getElementById('subtitulo-grafico');
+    const cuerpo = document.getElementById('grafico-calificaciones-cuerpo');
+    const numero = document.getElementById('promedio-numero');
+    const estrellasPromedio = document.getElementById('promedio-estrellas');
+    const totalTexto = document.getElementById('promedio-total');
     contenedor.innerHTML = '';
 
     const total = resenas.length;
 
     if (total === 0) {
-        subtitulo.hidden = true;
+        cuerpo.hidden = true;
         mensaje.textContent = 'Todavía no hay calificaciones para mostrar.';
         mensaje.hidden = false;
         return;
@@ -141,15 +144,14 @@ function renderizarGraficoCalificaciones(resenas) {
     mensaje.hidden = true;
 
     const conteo = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-    let sumaCalificaciones = 0;
     resenas.forEach((resena) => {
         conteo[resena.calificacion] = (conteo[resena.calificacion] || 0) + 1;
-        sumaCalificaciones += resena.calificacion;
     });
 
-    const promedio = (sumaCalificaciones / total).toFixed(1);
-    subtitulo.textContent = `Promedio de ${promedio} ★ basado en ${total} ${total === 1 ? 'reseña' : 'reseñas'}`;
-    subtitulo.hidden = false;
+    numero.textContent = rankingPonderado.toFixed(1);
+    estrellasPromedio.textContent = '★'.repeat(Math.round(rankingPonderado));
+    totalTexto.textContent = `Basado en ${total} ${total === 1 ? 'reseña' : 'reseñas'}`;
+    cuerpo.hidden = false;
 
     [5, 4, 3, 2, 1].forEach((estrellas) => {
         const cantidad = conteo[estrellas];
@@ -354,7 +356,7 @@ async function cargarDetalleRestaurante() {
     }
 
     const usuarioActual = obtenerUsuarioActual();
-    renderizarGraficoCalificaciones(restaurante.resenas);
+    renderizarGraficoCalificaciones(restaurante.resenas, restaurante.rankingPonderado);
     renderizarResenas(restaurante.resenas, usuarioActual);
     configurarFormularioResena(restaurante);
 

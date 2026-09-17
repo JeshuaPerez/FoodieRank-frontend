@@ -236,25 +236,42 @@ a.tarjeta-restaurante:hover {
 .info-restaurante__cabecera {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--espacio-lg);
+    gap: var(--espacio-xl);
     align-items: flex-start;
     margin-bottom: var(--espacio-lg);
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-tarjeta);
+    padding: var(--espacio-lg);
+    animation: aparecer 0.4s ease-out both;
+}
+
+.info-restaurante__imagen-contenedor {
+    position: relative;
+    flex-shrink: 0;
 }
 
 .info-restaurante__imagen {
-    width: 280px;
+    display: block;
+    width: 300px;
     max-width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     border-radius: var(--radio-borde);
-    box-shadow: var(--sombra-tarjeta);
 }
 
 .info-restaurante__datos {
     flex: 1 1 280px;
 }
 
+.info-restaurante__datos h1 {
+    margin-bottom: var(--espacio-sm);
+}
+
 .insignia-ranking-detalle {
+    position: absolute;
+    top: var(--espacio-sm);
+    right: var(--espacio-sm);
     display: inline-flex;
     align-items: center;
     background-color: var(--color-acento);
@@ -263,17 +280,42 @@ a.tarjeta-restaurante:hover {
     font-size: var(--texto-sm);
     padding: var(--espacio-xs) var(--espacio-md);
     border-radius: 999px;
-    margin-bottom: var(--espacio-sm);
+    box-shadow: var(--sombra-tarjeta);
 }
 
 .info-restaurante__categoria {
-    color: var(--color-texto-secundario);
-    margin-bottom: var(--espacio-xs);
+    display: inline-block;
+    background-color: var(--color-fondo);
+    color: var(--color-primario);
+    font-weight: 700;
+    font-size: var(--texto-sm);
+    padding: 2px var(--espacio-sm);
+    border-radius: 999px;
+    margin-bottom: var(--espacio-sm);
 }
 
 .info-restaurante__ubicacion {
     color: var(--color-texto-secundario);
+    font-size: var(--texto-sm);
     margin-bottom: var(--espacio-md);
+}
+
+.info-restaurante__ubicacion::before {
+    content: '📍 ';
+}
+
+.info-restaurante__descripcion {
+    color: var(--color-texto);
+    line-height: 1.6;
+    padding-top: var(--espacio-md);
+    border-top: 1px solid var(--color-borde);
+}
+
+@media (max-width: 600px) {
+    .info-restaurante__imagen-contenedor,
+    .info-restaurante__imagen {
+        width: 100%;
+    }
 }
 
 .grid-platos {
@@ -388,6 +430,37 @@ a.tarjeta-restaurante:hover {
 .formulario-resena select,
 .formulario-resena textarea {
     width: 100%;
+}
+
+.seccion-resenas__cuerpo {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--espacio-xl);
+}
+
+.seccion-resenas__cuerpo .lista-resenas {
+    flex: 1 1 60%;
+    padding: var(--espacio-md) 0 0;
+}
+
+.seccion-resenas__cuerpo .formulario-resena {
+    flex: 1 1 320px;
+    max-width: 380px;
+    margin-bottom: 0;
+    position: sticky;
+    top: 90px;
+}
+
+@media (max-width: 800px) {
+    .seccion-resenas__cuerpo {
+        flex-direction: column;
+    }
+
+    .seccion-resenas__cuerpo .formulario-resena {
+        max-width: 100%;
+        width: 100%;
+        position: static;
+    }
 }
 
 .menu-sesion {
@@ -522,21 +595,59 @@ a.tarjeta-restaurante:hover {
     margin-bottom: var(--espacio-xs);
 }
 
-.grafico-calificaciones__subtitulo {
-    display: inline-block;
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-    font-size: var(--texto-md);
+.grafico-calificaciones__cuerpo {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-xl);
+}
+
+.grafico-calificaciones__resumen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 180px;
+    background: linear-gradient(135deg, var(--color-acento-claro), var(--color-acento));
+    color: var(--color-primario);
+    border-radius: var(--radio-borde);
+    padding: var(--espacio-lg);
+    text-align: center;
+}
+
+.grafico-calificaciones__numero {
+    font-family: var(--fuente-titulos);
+    font-size: var(--texto-xxl);
     font-weight: 700;
-    padding: var(--espacio-xs) var(--espacio-md);
-    border-radius: 999px;
-    margin-bottom: var(--espacio-lg);
+    line-height: 1;
+}
+
+.grafico-calificaciones__estrellas {
+    font-size: var(--texto-lg);
+    margin: var(--espacio-xs) 0;
+    letter-spacing: 2px;
+}
+
+.grafico-calificaciones__total {
+    font-size: var(--texto-sm);
+    font-weight: 700;
 }
 
 .grafico-barras {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: var(--espacio-md);
+}
+
+@media (max-width: 600px) {
+    .grafico-calificaciones__cuerpo {
+        flex-direction: column;
+    }
+
+    .grafico-calificaciones__resumen {
+        flex: none;
+        width: 100%;
+    }
 }
 
 .grafico-barras__fila {
