@@ -29,8 +29,10 @@ Este frontend no requiere build ni dependencias: se sirve como archivos estátic
 
 ## Repositorio del backend
 
-https://github.com/JeshuaPerez/FoodieRank-back
+https://github.com/JeshuaPerez/FoodieRank-backend
 
 ## Créditos
 
-Jeshua Perez (Frontend) y Juan Lema (Backend) — proyecto académico FoodieRank, metodología SCRUM.
+Proyecto académico desarrollado en equipo por **Jeshua Pérez** y **Juan Lema**,
+con metodología Scrum. El trabajo de backend y frontend fue compartido entre
+ambos.
